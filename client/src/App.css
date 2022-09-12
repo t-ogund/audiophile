@@ -1,0 +1,152 @@
+.nav-text-color {
+  color: white;
+}
+
+.white-text {
+  color: white;
+}
+
+.hero-image {
+  background-image: url('../public/assets/home/desktop/image-hero.jpg');
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media only screen and (max-width: 768px) {
+  .hero-image {
+    background-image: url('../public/assets/home/tablet/image-header.jpg');
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .hero-image {
+    background-image: url('../public/assets/home/mobile/image-header.jpg');
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+.zx9-background {
+  background-image: url("../public/assets/home/desktop/image-speaker-zx9.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+  height: 30rem;
+  z-index: 2;
+}
+
+.home-card-height {
+  height: 20rem;
+}
+
+.home-card-images {
+  position: absolute;
+  height: 10rem;
+  width: 10rem;
+  top: -60px;
+  align-self: center;
+}
+
+.zx9-background-color {
+  background-color: #D87D4A;
+  color: white;
+}
+
+@media only screen and (max-width: 768px) {
+  .zx9-background {
+    background-image: url("../public/assets/home/desktop/image-speaker-zx9.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30%;
+    height: 30rem;
+  }
+  .zx9-text {
+    text-align: center;
+    padding-bottom: 5rem;
+  }
+}
+
+.zx9-text {
+  align-self: center;
+  /* background-color: green; */
+}
+
+.background-circles {
+  position: absolute;
+  z-index: 1;
+}
+
+.zx7-background {
+  background-image: url("../public/assets/home/desktop/image-speaker-zx7.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 20rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .zx7-background {
+    background-image: url("../public/assets/home/tablet/image-speaker-zx7.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 20rem;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .zx7-background {
+    background-image: url("../public/assets/home/mobile/image-speaker-zx7.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 20rem;
+  }
+}
+
+.zx7-col {
+  display: flex;
+  align-items: center;
+  height: 20rem;
+}
+
+.yx1-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #F1F1F1;
+  border-radius: 15px;
+}
+
+.round-corner {
+  border-radius: 15px;
+}
+
+@media only screen and (max-width: 576px) {
+  .best-audio-text {
+    order: 2;
+  }
+  .headphone-profile {
+    order: 1;
+  }
+}
+
+.footer-menu {
+  display: flex;
+  list-style-type: none;
+  justify-content: space-between;
+}
+
+
+.social-icons {
+  padding: .5rem;
+}
