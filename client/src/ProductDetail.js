@@ -35,7 +35,7 @@ function ProductDetail(props) {
         }
     })
 
-    // console.log('productData', productData)
+    console.log('productData', productData)
 
     // localStorage.clear()
 
@@ -71,7 +71,9 @@ function ProductDetail(props) {
             setNewItem(
                 newItem = {},
                 newItem.name = productData[0].name,
-                newItem.quantity = itemInput
+                newItem.quantity = itemInput,
+                newItem.price = productData[0].price,
+                newItem.slug = productData[0].slug
             )
     } 
     setCartArray(
@@ -97,7 +99,7 @@ console.log('testing cartArray', cartArray)
             <Container>
                 <Link to="/headphones">Go Back</Link>
                 <Row style={{ marginBottom: "7rem" }}>
-                <Cart cartArray={cartArray} itemInfo={ productData[0] } quantity={ itemInput } />
+                <Cart cartArray={cartArray} quantity={ itemInput } price={productData[0].price} slug={productData[0].slug} />
                     <Col lg={6} md={6} sm={12}>
                         <picture>
                             <source media="(max-width: 2500px)" srcset="../assets/shared/desktop/image-best-gear.jpg" />

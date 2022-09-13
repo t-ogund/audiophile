@@ -14,10 +14,10 @@ function CartItem(props) {
     return(
         <Row>
             <Col className="d-flex mb-3 justify-content-between">
-                <Image style={{ width: "4rem", height: "4rem" }} src="../assets/cart/image-xx59-headphones.jpg"/>
+                <Image style={{ width: "4rem", height: "4rem" }} src={`../assets/cart/image-${props.slug}.jpg`} />
                 <div className="cart-item-name-price">
-                    <p className="m-0">{props.cartItemInfo.name}</p>
-                    <p className="m-0">{props.cartItemQuantity === 0 ? 0 : props.cartItemInfo.price * props.cartItemQuantity}</p>
+                    <p className="m-0">{props.cartItemInfo}</p>
+                    <p className="m-0">{props.cartItemQuantity * props.cartItemPrice}</p>
                 </div>
                 <div className="d-flex">
                     <Button className="align-self-start">-</Button>
