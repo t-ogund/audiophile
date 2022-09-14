@@ -23,20 +23,16 @@ function Cart(props) {
     console.log("CART ARRAY:", cartArray)
 
     function removeAll() {
-        setCartArray(
-            localStorage.clear() 
-        )
-        console.log('remove all cartArray', cartArray)
+        console.log('test')
     }
-
     
     return(
         // <Container style={{ backgroundColor: 'green'}}>
         <>
             <Row>
                 <Col style={{ backgroundColor: 'blue'}} lg={4} md={5} sm={6} xs={8} className="d-flex justify-content-between">
-                    <h5>Cart ({props.cartArray.length})</h5>
-                    <Button onClick={removeAll}>Remove All</Button>
+                    <h5>Cart ({props.cartArray === undefined ? 0 : props.cartArray.length})</h5>
+                    <Button onClick={props.removeAll}>Remove All</Button>
                 </Col>
             </Row>
             <Row>

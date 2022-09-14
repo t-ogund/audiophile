@@ -15,8 +15,11 @@ function ProductDetail(props) {
     let [ cartArray, setCartArray ] = useState([]);
     let [ itemInput, setItemInput ] = useState(0);
     let [ newItem, setNewItem ] = useState({});
+    let [ product, setProduct ] = useState(null);
     // let newItem
 // console.log('top cartArray', cartArray)
+    
+
     useEffect(() => {
         const items = JSON.parse(localStorage.getItem("cart"))
         if (items) {
@@ -28,13 +31,31 @@ function ProductDetail(props) {
     // console.log('props', props)
 
     let id = useParams();
+    useEffect(() => {
+        console.log('test id', id)
+        fetch("/headphone-data")
+        .then(response => response.json())
+        .then(data => {
+            // console.log('data', data)
+            setProduct(
+                product = data.data.find(item => {
+                    if (item.slug === id.id) {
+                        console.log(id.id)
+                        return item
+                    }
+                })
+            )
+            console.log('new product', product)
+            
+        })
+    }, [cartArray])
     const formattedTitle = id.id.split("-").join(" ");
     const productData = props.jsonData.data.filter(item => {
         if (item.slug === id.id) {
             return item
         }
     })
-
+// console.log(newProduct)
     console.log('productData', productData)
 
     // localStorage.clear()
@@ -63,6 +84,8 @@ function ProductDetail(props) {
         )
         // console.log(typeof itemInput)
     }
+    console.log("PRODUCT", product);
+    console.log("PRODUCTDATA", productData)
 
     
     
@@ -78,17 +101,30 @@ function ProductDetail(props) {
     } 
     setCartArray(
         cartArray = cartArray.filter(item => {
+            console.log('testing productData', productData)
             if (item.name !== productData[0].name) {
                 console.log("item.name", item.name, "productData[0].name", productData[0].name)
                 return item
             }
-        })
+        }),
+        console.log(cartArray)
     )
             
         cartArray.push(newItem)
     console.log(cartArray)
     localStorage.setItem("cart", JSON.stringify(cartArray));
     console.log(localStorage)
+    }
+console.log('cart array', cartArray)
+    function removeAll() {
+        setCartArray(
+            cartArray = [],
+            localStorage.clear()
+        )
+        setItemInput(
+            itemInput = 0
+        )
+        console.log('removed cart array', cartArray)
     }
     // console.log('localStorage', localStorage)
 console.log('testing cartArray', cartArray)
@@ -99,7 +135,7 @@ console.log('testing cartArray', cartArray)
             <Container>
                 <Link to="/headphones">Go Back</Link>
                 <Row style={{ marginBottom: "7rem" }}>
-                <Cart cartArray={cartArray} quantity={ itemInput } price={productData[0].price} slug={productData[0].slug} />
+                <Cart removeAll={removeAll} cartArray={cartArray} quantity={ itemInput } price={productData[0].price} slug={productData[0].slug} />
                     <Col lg={6} md={6} sm={12}>
                         <picture>
                             <source media="(max-width: 2500px)" srcset="../assets/shared/desktop/image-best-gear.jpg" />
