@@ -16,9 +16,6 @@ function ProductDetail(props) {
     let [ itemInput, setItemInput ] = useState(0);
     let [ newItem, setNewItem ] = useState({});
     let [ product, setProduct ] = useState(null);
-    // let newItem
-// console.log('top cartArray', cartArray)
-    
 
     useEffect(() => {
         const items = JSON.parse(localStorage.getItem("cart"))
@@ -27,8 +24,6 @@ function ProductDetail(props) {
         }
         console.log('use effect', cartArray)
     }, [])
-// localStorage.clear();
-    // console.log('props', props)
 
     let id = useParams();
     useEffect(() => {
@@ -36,7 +31,6 @@ function ProductDetail(props) {
         fetch("/headphone-data")
         .then(response => response.json())
         .then(data => {
-            // console.log('data', data)
             setProduct(
                 product = data.data.find(item => {
                     if (item.slug === id.id) {
@@ -55,10 +49,6 @@ function ProductDetail(props) {
             return item
         }
     })
-// console.log(newProduct)
-    console.log('productData', productData)
-
-    // localStorage.clear()
 
     function subtractItem() {
         if (itemInput > 0) {
@@ -66,7 +56,6 @@ function ProductDetail(props) {
                 itemInput -= 1
             )
         }
-        // console.log(itemInput)
     }
 
     function addItem() {
@@ -75,21 +64,21 @@ function ProductDetail(props) {
                 itemInput += 1
             )
         }
-        // console.log(itemInput)
     }
 
     function handleChange(e) {
         setItemInput(
             itemInput = parseInt(e.target.value)
         )
-        // console.log(typeof itemInput)
-    }
-    console.log("PRODUCT", product);
-    console.log("PRODUCTDATA", productData)
-
-    
+    } 
     
     function addToCart() {
+        if (localStorage.length === 0) {
+            setCartArray(
+                localStorage.clear(),
+                cartArray = []
+            )
+        }
        if (itemInput > 0) {
             setNewItem(
                 newItem = {},
@@ -108,26 +97,11 @@ function ProductDetail(props) {
             }
         }),
         console.log(cartArray)
-    )
-            
+    )     
         cartArray.push(newItem)
-    console.log(cartArray)
-    localStorage.setItem("cart", JSON.stringify(cartArray));
-    console.log(localStorage)
+        localStorage.setItem("cart", JSON.stringify(cartArray));
     }
-console.log('cart array', cartArray)
-    function removeAll() {
-        setCartArray(
-            cartArray = [],
-            localStorage.clear()
-        )
-        setItemInput(
-            itemInput = 0
-        )
-        console.log('removed cart array', cartArray)
-    }
-    // console.log('localStorage', localStorage)
-console.log('testing cartArray', cartArray)
+
     return (
         <>
             <Navigation />
@@ -135,7 +109,7 @@ console.log('testing cartArray', cartArray)
             <Container>
                 <Link to="/headphones">Go Back</Link>
                 <Row style={{ marginBottom: "7rem" }}>
-                <Cart removeAll={removeAll} cartArray={cartArray} quantity={ itemInput } price={productData[0].price} slug={productData[0].slug} />
+                {/* <Cart removeAll={removeAll} cartArray={cartArray} quantity={ itemInput } price={productData[0].price} slug={productData[0].slug} /> */}
                     <Col lg={6} md={6} sm={12}>
                         <picture>
                             <source media="(max-width: 2500px)" srcset="../assets/shared/desktop/image-best-gear.jpg" />

@@ -11,7 +11,9 @@ import { Link, useParams } from "react-router-dom";
 import CartItem from "./CartItem";
 
 function Cart(props) {
-    const [ cartArray, setCartArray ] = useState([])
+    let [ cartArray, setCartArray ] = useState([])
+    let [ itemInput, setItemInput ] = useState(0);
+
     console.log('cart props', props)
     console.log('test')
 
@@ -19,42 +21,43 @@ function Cart(props) {
         setCartArray(
             JSON.parse(localStorage.getItem("cart"))
         )
-    }, [ props.cartArray ])
+    }, [])
     console.log("CART ARRAY:", cartArray)
 
     function removeAll() {
-        console.log('test')
+        setCartArray(
+            JSON.parse(localStorage.getItem("cart"))
+        )
+ 
+        setCartArray(
+            cartArray = []
+        )
+        localStorage.clear()
     }
     
     return(
-        // <Container style={{ backgroundColor: 'green'}}>
         <>
             <Row>
-                <Col style={{ backgroundColor: 'blue'}} lg={4} md={5} sm={6} xs={8} className="d-flex justify-content-between">
+                <Col style={{ backgroundColor: 'blue'}} xs={12} className="d-flex justify-content-between">
                     <h5>Cart ({props.cartArray === undefined ? 0 : props.cartArray.length})</h5>
-                    <Button onClick={props.removeAll}>Remove All</Button>
+                    <Button onClick={removeAll}>Remove All</Button>
                 </Col>
             </Row>
             <Row>
-                <Col lg={4} md={5} sm={6} xs={8}>
+                <Col xs={12}>
                     {
                         cartArray && cartArray.map(item => {
                             return <CartItem cartItemInfo={item.name} cartItemQuantity={item.quantity} cartItemPrice={item.price} slug={item.slug} />
                         })
                     }
-                    {/* <CartItem cartItemInfo={props.itemInfo} cartItemQuantity={props.quantity} /> */}
-                    {/* <CartItem cartItemInfo={props.itemInfo} />
-                    <CartItem cartItemInfo={props.itemInfo} />
-                    <CartItem cartItemInfo={props.itemInfo} /> */}
                 </Col>
             </Row>
             <Row>
-                <Col style={{ backgroundColor: 'red'}} lg={4} md={5} sm={6} xs={8} className="d-flex justify-content-between">
+                <Col style={{ backgroundColor: 'red'}} xs={12} className="d-flex justify-content-between">
                     <p>
                         Total
                     </p>
                     <p>
-                            {/* $5,396 */}
                             {
                                 cartArray && cartArray.map(item => {
                                     let totalQuantity = item.quantity
@@ -69,7 +72,6 @@ function Cart(props) {
                 </Col>
             </Row>
         </>
-        // </Container>
     )
 }
 

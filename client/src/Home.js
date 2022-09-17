@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from './Navigation';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -19,6 +19,16 @@ function Home(props) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    let [ cartArray, setCartArray ] = useState([]);
+
+    useEffect(() => {
+        const items = JSON.parse(localStorage.getItem("cart"))
+        if (items) {
+            setCartArray(items)
+        }
+        console.log('use effect', cartArray)
+    }, [])
 
 
     function handleClick() {
@@ -196,21 +206,17 @@ function Home(props) {
             {/* <Button variant="primary" onClick={handleShow}>
         Launch demo modal
       </Button> */}
-
+{/* 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+            <Cart />
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          <Button className="flex" variant="primary">
+            Checkout
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
         </>
     )
 }
