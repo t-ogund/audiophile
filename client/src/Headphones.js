@@ -32,7 +32,7 @@ function Headphones() {
 
     return(
         <>
-            <Navigation />
+            {/* <Navigation /> */}
             <Container fluid style={{ backgroundColor: "#000000"}}>
                 <Row className="mb-5">
                     <Col style={{ color: "#fff", padding: "4rem" }} className="d-flex justify-content-center">

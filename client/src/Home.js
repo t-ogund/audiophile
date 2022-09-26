@@ -11,33 +11,21 @@ import Modal from 'react-bootstrap/Modal';
 import Cart from "./Cart";
 
 function Home(props) {
-    console.log('home props', props)
-    console.log("test")
-
-
-    const [show, setShow] = useState(false);
-
+    const [ show, setShow ] = useState(false);
+    let [ cartArray, setCartArray ] = useState([]);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    let [ cartArray, setCartArray ] = useState([]);
 
     useEffect(() => {
         const items = JSON.parse(localStorage.getItem("cart"))
         if (items) {
             setCartArray(items)
         }
-        console.log('use effect', cartArray)
     }, [])
-
-
-    function handleClick() {
-        console.log('cart was clicked')
-    }
 
     return(
         <>
-            <Navigation clickCart={handleShow} />
+            {/* <Navigation clickCart={handleShow} /> */}
             <Container fluid>
             {/* <Cart /> */}
                 <Row>

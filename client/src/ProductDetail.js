@@ -19,28 +19,23 @@ function ProductDetail(props) {
 
     useEffect(() => {
         const items = JSON.parse(localStorage.getItem("cart"))
-        if (items) {
-            setCartArray(items)
-        }
-        console.log('use effect', cartArray)
+            if (items) {
+                setCartArray(items)
+            }
     }, [])
 
     let id = useParams();
     useEffect(() => {
-        console.log('test id', id)
         fetch("/headphone-data")
         .then(response => response.json())
         .then(data => {
             setProduct(
                 product = data.data.find(item => {
                     if (item.slug === id.id) {
-                        console.log(id.id)
                         return item
                     }
                 })
-            )
-            console.log('new product', product)
-            
+            )      
         })
     }, [cartArray])
     const formattedTitle = id.id.split("-").join(" ");
@@ -90,13 +85,10 @@ function ProductDetail(props) {
     } 
     setCartArray(
         cartArray = cartArray.filter(item => {
-            console.log('testing productData', productData)
             if (item.name !== productData[0].name) {
-                console.log("item.name", item.name, "productData[0].name", productData[0].name)
                 return item
             }
         }),
-        console.log(cartArray)
     )     
         cartArray.push(newItem)
         localStorage.setItem("cart", JSON.stringify(cartArray));
@@ -104,7 +96,7 @@ function ProductDetail(props) {
 
     return (
         <>
-            <Navigation />
+            {/* <Navigation /> */}
             <h1>{ formattedTitle } Product Detail Page</h1>
             <Container>
                 <Link to="/headphones">Go Back</Link>
