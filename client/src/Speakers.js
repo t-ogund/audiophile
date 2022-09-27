@@ -31,7 +31,6 @@ function Speakers() {
         />
       })
 
-
     return(
         <>
             {/* <Navigation /> */}

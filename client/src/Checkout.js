@@ -21,10 +21,6 @@ function Checkout(props) {
      if (items) {
         setCart(items)
      }
-     
-    //  setSummaryItem(
-    //     items
-    //  )
     }, [])
    
     return(

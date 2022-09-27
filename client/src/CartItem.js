@@ -12,20 +12,16 @@ import { Link, useParams } from "react-router-dom";
 function CartItem(props) {
     let [ itemQuantity, setItemQuantity ] = useState(props.cartItemQuantity)
     let [ cartArray, setCartArray ] = useState([]);
-    console.log('cart item prop', props)
 
     function addSummaryItem(e) {
-        console.log('add item event', e)
-        console.log('YAYA props', props)
-        // props.cartItemQuantity += 1
         setItemQuantity(itemQuantity += 1)
         props.increaseCartItem(itemQuantity, props)
     }
 
     function subtractSummaryItem() {
-        console.log("subtract an item")
         if (itemQuantity > 0) {
             setItemQuantity(itemQuantity -= 1)
+            props.decreaseCartItem(itemQuantity, props)
         }
     }
 
@@ -33,7 +29,6 @@ function CartItem(props) {
         setCartArray(
             JSON.parse(localStorage.getItem("cart"))
         )
-        //   console.log('testing cart array', cartArray, typeof cartArray)
     }, [])
 
 

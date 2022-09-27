@@ -31,7 +31,6 @@ function Earphones() {
         />
       })
 
-
     return(
         <>
             {/* <Navigation /> */}

@@ -17,21 +17,15 @@ function Cart(props) {
   let [ itemInput, setItemInput ] = useState(0);
   let [ cartLength, setCartLength ] = useState(0);
   let [ cartItemCount, setCartItemCount ] = useState(0);
-  let [ increaseItem, setIncreaseItem ] = useState({})
+  let [ increaseItem, setIncreaseItem ] = useState({});
+  let [ decreaseItem, setDecreaseItem ] = useState({});
 
   useEffect(() => {
       setCartArray(
           JSON.parse(localStorage.getItem("cart"))
       )
         console.log('testing cart array', cartArray, typeof cartArray)
-  }, [ increaseItem ])
-
-  // useEffect(() => {
-  //   setCartLength(cartLength)
-  // }, [])
-
-  console.log('cart array from cart', cartArray)
-
+  }, [ increaseItem, decreaseItem ])
 
   function removeAll() {
       setCartArray(
@@ -47,8 +41,6 @@ function Cart(props) {
   props.passCartProp(cartArray);
 
   function increaseCartItem(x, y) {
-        console.log('chacha')
-        console.log('x', x, y)
         setCartItemCount(x)
         setIncreaseItem(
             increaseItem = {},
@@ -57,19 +49,39 @@ function Cart(props) {
             increaseItem.price = y.cartItemPrice,
             increaseItem.slug = y.slug
         )
-        console.log("item to update", increaseItem)
         const items = JSON.parse(localStorage.getItem("cart"))
-        console.log(items)
+
         for (let i = 0; i < items.length; i++) {
             if (items[i].name === increaseItem.name) {
                 items.splice(i, 1, increaseItem)
             }
         }
-        console.log("should be updated list", items)
+
         setCartArray(
             localStorage.setItem("cart", JSON.stringify(items))
         )
-        console.log('cartArray', cartArray)
+    }
+
+    function decreaseCartItem(x, y) {
+        setCartItemCount(x)
+        setDecreaseItem(
+            decreaseItem = {},
+            decreaseItem.name = y.cartItemInfo,
+            decreaseItem.quantity = y.cartItemQuantity - 1,
+            decreaseItem.price = y.cartItemPrice,
+            decreaseItem.slug = y.slug
+        )
+        const subItems = JSON.parse(localStorage.getItem("cart"))
+
+        for (let i = 0; i < subItems.length; i++) {
+            if (subItems[i].name === decreaseItem.name) {
+            subItems.splice(i, 1, decreaseItem)
+            }
+        }
+
+        setCartArray(
+            localStorage.setItem("cart", JSON.stringify(subItems))
+        )
     }
   
 
@@ -86,7 +98,7 @@ function Cart(props) {
                 <Col xs={12}>
                     {
                         cartArray && cartArray.map(item => {
-                            return <CartItem increaseCartItem={increaseCartItem} cartItemInfo={item.name} cartItemQuantity={item.quantity} cartItemPrice={item.price} slug={item.slug} />
+                            return <CartItem increaseCartItem={increaseCartItem} decreaseCartItem={decreaseCartItem} cartItemInfo={item.name} cartItemQuantity={item.quantity} cartItemPrice={item.price} slug={item.slug} />
                         })
                     }
                 </Col>

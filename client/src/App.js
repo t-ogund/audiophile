@@ -19,9 +19,6 @@ function App() {
   const [ jsonData, setJsonData ] = useState([]);
   const [ cartArray, setCartArray ] = useState([]);
 
-  
-
-
   useEffect(() => {
     fetch('/headphone-data')
       .then(res => res.json())

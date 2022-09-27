@@ -34,7 +34,6 @@ function Navigation(props) {
 
     props.passDataToAppProp(getCart);
 
-
     return(
         <>
             <Container fluid>

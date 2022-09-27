@@ -9,16 +9,6 @@ import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
 
 function SummaryItem(props) {
-//   let [ cartArray, setCartArray ] = useState([]);
-
-//   useEffect(() => {
-//     setCartArray(
-//         JSON.parse(localStorage.getItem("cart"))
-//     )
-//     //   console.log('testing cart array', cartArray, typeof cartArray)
-// }, [])
-    // console.log('summary item cart array', cartArray)
-    console.log('summary item props', props)
     return (
         <Row>
             <Col xs={3} style={{ backgroundColor: "red" }}>
