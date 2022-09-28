@@ -17,6 +17,8 @@ function Navigation(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    console.log('nav props', props)
+
     useEffect(() => {
         const items = JSON.parse(localStorage.getItem("cart"))
             if (items) {
@@ -31,9 +33,10 @@ function Navigation(props) {
     function passCart(x) {
         setGetCart(x)
     }
+    console.log(getCart)
 
     props.passDataToAppProp(getCart);
-
+    console.log('nav cart array', cartArray)
     return(
         <>
             <Container fluid>
@@ -71,13 +74,18 @@ function Navigation(props) {
                 <Modal.Body>
                     <Cart passCartProp={passCart} />
                 </Modal.Body>
-                <Modal.Footer>
-                    <Link to="/checkout">
-                        <Button className="flex" variant="primary">
-                            Checkout
-                        </Button>
-                    </Link>
-                </Modal.Footer>
+                {
+                    !getCart ?
+                    null
+                    :
+                    <Modal.Footer>
+                        <Link to="/checkout">
+                            <Button className="flex" variant="primary">
+                                Checkout
+                            </Button>
+                        </Link>
+                    </Modal.Footer>
+                }
             </Modal>
         </>
     )

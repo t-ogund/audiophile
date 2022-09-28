@@ -9,10 +9,11 @@ import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
 
 function SummaryItem(props) {
+    console.log('summary item props', props)
     return (
         <Row>
             <Col xs={3} style={{ backgroundColor: "red" }}>
-                <Image style={{ width: "4rem", height: "4rem" }} />
+                <Image src={props.src} style={{ width: "4rem", height: "4rem" }} />
             </Col>
             <Col style={{ backgroundColor: "yellow" }}>
                 {props.title}

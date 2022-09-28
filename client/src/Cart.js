@@ -39,7 +39,7 @@ function Cart(props) {
   }
 
   props.passCartProp(cartArray);
-
+console.log(cartArray)
   function increaseCartItem(x, y) {
         setCartItemCount(x)
         setIncreaseItem(
@@ -90,7 +90,7 @@ function Cart(props) {
         <>
             <Row>
                 <Col style={{ backgroundColor: 'blue'}} xs={12} className="d-flex justify-content-between">
-                    {/* <h5>Cart ({props.cartArray === undefined ? 0 : props.cartArray.length})</h5> */}
+                    <h5>Cart ({cartArray === [] || cartArray === null || cartArray === undefined ? 0 : cartArray.length})</h5>
                     <Button onClick={removeAll}>Remove All</Button>
                 </Col>
             </Row>

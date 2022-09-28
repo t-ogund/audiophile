@@ -13,16 +13,45 @@ import Form from 'react-bootstrap/Form';
 import SummaryItem from "./SummaryItem";
 
 function Checkout(props) {
+    console.log('checkout props', props);
     const [ cart, setCart ] = useState([]);
     const [ summaryItem, setSummaryItem ] = useState([]);
+    let [ totalAmount, setTotalAmount ] = useState(null);
+    let [ vat, setVat ] = useState(null);
+    let [ grandTotal, setGrandTotal ] = useState(null);
+    let [ shipping, setShipping ] = useState(0);
+    console.log('checkout cart', cart)
     
     useEffect(() => {
         let items = JSON.parse(localStorage.getItem("cart"))
      if (items) {
         setCart(items)
      }
-    }, [])
-   
+    }, [ props.cart ])
+
+    useEffect(() => {
+        setTotalAmount(
+            cart.map(item => item.price * item.quantity).reduce((acc, currentValue) => {
+                return acc + currentValue
+            }, 0)
+        )
+
+        setVat(
+            totalAmount / 5
+        )
+
+        setGrandTotal(
+            totalAmount + shipping
+        )
+
+        setShipping(
+            totalAmount > 0 ?
+            50
+            :
+            0
+        )
+    }, [ totalAmount, vat, grandTotal, shipping, props.cart ])
+   console.log('checkout cart', cart)
     return(
         <>
             {/* <Navigation /> */}
@@ -141,9 +170,38 @@ function Checkout(props) {
                             <SummaryItem /> */}
                             {
                                 props.cart && props.cart.map(item => {
-                                    return <SummaryItem title={item.name} price={item.price} quantity={item.quantity} />
+                                    return <SummaryItem src={`assets/cart/image-${item.slug}.jpg`} title={item.name} price={item.price} quantity={item.quantity} />
                                 })
                             }
+                            <Row>
+                                <Col className="d-flex justify-content-between">
+                                    <p>TOTAL</p>
+                                    <p>${totalAmount}</p>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="d-flex justify-content-between">
+                                    <p>SHIPPING</p>
+                                    <p>${shipping}</p>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="d-flex justify-content-between">
+                                    <p>VAT (INCLUDED)</p>
+                                    <p>${vat}</p>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="d-flex justify-content-between">
+                                    <p>GRAND TOTAL</p>
+                                    <p>${grandTotal}</p>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="d-flex justify-content-center">
+                                    <Button>CONTINUE & PAY</Button>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </Container>
