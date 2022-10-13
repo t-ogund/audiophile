@@ -30,6 +30,7 @@ function CartItem(props) {
             JSON.parse(localStorage.getItem("cart"))
         )
     }, [])
+    // console.log('item quantity', itemQuantity)
 
 
     return(

@@ -9,6 +9,7 @@ import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import Cart from "./Cart";
+import Footer from "./Footer";
 
 function Home(props) {
     const [ show, setShow ] = useState(false);
@@ -22,6 +23,7 @@ function Home(props) {
             setCartArray(items)
         }
     }, [])
+    console.log('home props', props)
 
     return(
         <>
@@ -38,7 +40,9 @@ function Home(props) {
                                     Experience natural, lifelike audio and exceptional 
                                     build quality made for the passionate music enthusiast.
                                 </p>
-                                <Button>SEE PRODUCT</Button>
+                                <Link to={`/headphones/xx99-mark-two-headphones`}>
+                                    <Button>SEE PRODUCT</Button>
+                                </Link>
                             </Col>
                         </Row>
                     </Col>
@@ -95,7 +99,9 @@ function Home(props) {
                         <h2>ZX9 SPEAKER</h2>
                         <p>Upgrade to premium speakers that are phenomenally built to discover 
                         truly remarkable sound.</p>
-                        <Button>SEE PRODUCT</Button>
+                        <Link to={`speakers/zx9-speaker`}>
+                            <Button>SEE PRODUCT</Button>
+                        </Link>
                     </Col>
                 </Row>
                 <Row className="mb-5">
@@ -103,7 +109,9 @@ function Home(props) {
                         <Row className="zx7-col">
                             <Col className="text-center zx7-text" xs={6}>
                                 <h3>ZX7 SPEAKERS</h3>
-                                <Button>SEE PRODUCT</Button>
+                                <Link to={`speakers/zx7-speaker`}>
+                            <Button>SEE PRODUCT</Button>
+                        </Link>
                             </Col>
                         </Row>
                    </Col>        
@@ -120,7 +128,9 @@ function Home(props) {
                     </Col>
                     <Col sm={6} className="yx1-text p-5">
                         <h3>YX1 EARPHONES</h3>
-                        <Button>SEE PRODUCT</Button>
+                        <Link to={`earphones/yx1-earphones`}>
+                            <Button>SEE PRODUCT</Button>
+                        </Link>
                     </Col>
                 </Row>
                 <Row className="d-flex mb-5">
@@ -145,51 +155,7 @@ function Home(props) {
                     </Col>
                 </Row>    
             </Container>
-            <Container fluid>
-                <Row style={{ backgroundColor: "#101010" }} className="mt-5 d-flex justify-content-between p-5" lg={6} sm={12}>
-                    <Col style={{ color: "#fff" }}>
-                        <h3>audiophile</h3>
-
-                        {/* <p>
-                            Audiophile is an all in one stop to fulfill your audio needs. 
-                            We're a small team of music lovers and sound specialists who are 
-                            devoted to helping you get the most out of personal audio. Come and 
-                            visit our demo facility - we're open 7 days a week.
-                        </p>
-
-                        <p>Copyright 2021. All Rights Reserved</p> */}
-                        
-                    </Col>
-                    <Col style={{ color: "#fff" }} lg={6} sm={12}>
-                        <ul className="footer-menu">
-                            <li>HOME</li>
-                            <li>HEADPHONES</li>
-                            <li>SPEAKERS</li>
-                            <li>EARPHONES</li>
-                        </ul>
-                    </Col>
-                </Row>
-                <Row className="pl-5" style={{ backgroundColor: "#101010", color: "#fff" }}>
-                    <Col lg={6} sm={12}>
-                         <p>
-                            Audiophile is an all in one stop to fulfill your audio needs. 
-                            We're a small team of music lovers and sound specialists who are 
-                            devoted to helping you get the most out of personal audio. Come and 
-                            visit our demo facility - we're open 7 days a week.
-                        </p>
-                    </Col>
-                    <Col className="d-flex align-items-start justify-content-end">
-                        <Image className="social-icons" src="../assets/shared/desktop/icon-facebook.svg" />
-                        <Image className="social-icons" src="../assets/shared/desktop/icon-twitter.svg" />
-                        <Image className="social-icons" src="../assets/shared/desktop/icon-instagram.svg" />
-                    </Col>
-                </Row>
-                <Row className="pl-5" style={{ backgroundColor: "#101010", color: "#fff" }}>
-                    <Col>
-                        <p>Copyright 2021. All Rights Reserved</p>
-                    </Col>
-                </Row>
-            </Container>
+            <Footer />
 
             {/* <Button variant="primary" onClick={handleShow}>
         Launch demo modal

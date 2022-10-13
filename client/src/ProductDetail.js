@@ -10,12 +10,15 @@ import Card from 'react-bootstrap/Card';
 import { Link, useParams } from "react-router-dom";
 import ProductSuggestionCard from "./ProductSuggestionCard";
 import Cart from "./Cart";
+import Footer from "./Footer";
 
 function ProductDetail(props) {
     let [ cartArray, setCartArray ] = useState([]);
     let [ itemInput, setItemInput ] = useState(0);
     let [ newItem, setNewItem ] = useState({});
     let [ product, setProduct ] = useState(null);
+
+    // console.log("productDetail", props)
 
     useEffect(() => {
         const items = JSON.parse(localStorage.getItem("cart"))
@@ -25,25 +28,24 @@ function ProductDetail(props) {
     }, [])
 
     let id = useParams();
+    // console.log('id', id)
     useEffect(() => {
         fetch("/headphone-data")
         .then(response => response.json())
         .then(data => {
+            // console.log('data', data)
             setProduct(
                 product = data.data.find(item => {
                     if (item.slug === id.id) {
                         return item
                     }
                 })
-            )      
+            )   
+            // console.log('ue product', product)   
         })
     }, [cartArray])
+
     const formattedTitle = id.id.split("-").join(" ");
-    const productData = props.jsonData.data.filter(item => {
-        if (item.slug === id.id) {
-            return item
-        }
-    })
 
     function subtractItem() {
         if (itemInput > 0) {
@@ -77,15 +79,15 @@ function ProductDetail(props) {
        if (itemInput > 0) {
             setNewItem(
                 newItem = {},
-                newItem.name = productData[0].name,
+                newItem.name = product.name,
                 newItem.quantity = itemInput,
-                newItem.price = productData[0].price,
-                newItem.slug = productData[0].slug
+                newItem.price = product.price,
+                newItem.slug = product.slug
             )
     } 
     setCartArray(
         cartArray = cartArray.filter(item => {
-            if (item.name !== productData[0].name) {
+            if (item.name !== product.name) {
                 return item
             }
         }),
@@ -94,14 +96,19 @@ function ProductDetail(props) {
         localStorage.setItem("cart", JSON.stringify(cartArray));
     }
 
+    // console.log('product', product)
+
     return (
         <>
-            {/* <Navigation /> */}
-            <h1>{ formattedTitle } Product Detail Page</h1>
+            {
+                !product ?
+                null
+                :
+                <>
+                <h1>{ formattedTitle } Product Detail Page</h1>
             <Container>
                 <Link to="/headphones">Go Back</Link>
                 <Row style={{ marginBottom: "7rem" }}>
-                {/* <Cart removeAll={removeAll} cartArray={cartArray} quantity={ itemInput } price={productData[0].price} slug={productData[0].slug} /> */}
                     <Col lg={6} md={6} sm={12}>
                         <picture>
                             <source media="(max-width: 2500px)" srcset="../assets/shared/desktop/image-best-gear.jpg" />
@@ -111,14 +118,14 @@ function ProductDetail(props) {
                         </picture>
                     </Col>
                     <Col lg={6} md={6} sm={12}>
-                        <h3>{productData[0].new ? "NEW PRODUCT" : null}</h3>
+                        <h3>{product.new ? "NEW PRODUCT" : null}</h3>
                         <h2>
-                            {productData[0].name}
+                            {product.name}
                         </h2>
                         <p>
-                            {productData[0].description}
+                            {product.description}
                         </p>
-                        <p>$ {productData[0].price}</p>
+                        <p>$ {product.price}</p>
                         <Row>
                             <Col lg={4} md={4} sm={4} xs={4} className="d-flex">
                                 <Button onClick={subtractItem}>-</Button>
@@ -138,13 +145,13 @@ function ProductDetail(props) {
                     <Col lg={6} md={12}>
                         <h2 className="mb-3">FEATURES</h2>
                         <p className="mb-4" style={{ lineHeight: "1.7rem" }}>
-                            {productData[0].features}
+                            {product.features}
                         </p>
                     </Col>
                     <Col lg={6} md={12}>
                         <h2 className="mb-3">IN THE BOX</h2>
                         <ul>
-                            {productData[0].includes.map(includedItem => {
+                            {product.includes.map(includedItem => {
                                 return <li>{includedItem.quantity}x {includedItem.item}</li>
                             })}
                         </ul>
@@ -156,30 +163,30 @@ function ProductDetail(props) {
                         <Row>
                             <Col>
                                 <picture>
-                                    <source media="(max-width: 2500px)" srcset={`.${productData[0].gallery.first.desktop}`} />
-                                    <source media="(max-width: 768px)" srcset={`.${productData[0].gallery.first.tablet}`} />
-                                    <source media="(max-width: 375px)" srcset={`.${productData[0].gallery.first.mobile}`} />
-                                    <Image rounded fluid src={`.${productData[0].gallery.first.mobile}`} width="100%" />
+                                    <source media="(max-width: 2500px)" srcset={`.${product.gallery.first.desktop}`} />
+                                    <source media="(max-width: 768px)" srcset={`.${product.gallery.first.tablet}`} />
+                                    <source media="(max-width: 375px)" srcset={`.${product.gallery.first.mobile}`} />
+                                    <Image rounded fluid src={`.${product.gallery.first.mobile}`} width="100%" />
                                 </picture>
                             </Col>
                         </Row>
                         <Row>
                             <Col>
                                 <picture>
-                                    <source media="(max-width: 2500px)" srcset={`.${productData[0].gallery.second.desktop}`} />
-                                    <source media="(max-width: 768px)" srcset={`.${productData[0].gallery.second.tablet}`} />
-                                    <source media="(max-width: 375px)" srcset={`.${productData[0].gallery.second.mobile}`} />
-                                    <Image rounded fluid src={`.${productData[0].gallery.second.mobile}`} width="100%" />
+                                    <source media="(max-width: 2500px)" srcset={`.${product.gallery.second.desktop}`} />
+                                    <source media="(max-width: 768px)" srcset={`.${product.gallery.second.tablet}`} />
+                                    <source media="(max-width: 375px)" srcset={`.${product.gallery.second.mobile}`} />
+                                    <Image rounded fluid src={`.${product.gallery.second.mobile}`} width="100%" />
                                 </picture>
                             </Col>
                         </Row>
                     </Col>
                     <Col lg={6} md={6} sm={12}>
                         <picture>
-                            <source media="(max-width: 2500px)" srcset={`.${productData[0].gallery.third.desktop}`} />
-                            <source media="(max-width: 768px)" srcset={`.${productData[0].gallery.third.tablet}`} />
-                            <source media="(max-width: 375px)" srcset={`.${productData[0].gallery.third.mobile}`} />
-                            <Image rounded fluid src={`.${productData[0].gallery.third.mobile}`} width="100%" />
+                            <source media="(max-width: 2500px)" srcset={`.${product.gallery.third.desktop}`} />
+                            <source media="(max-width: 768px)" srcset={`.${product.gallery.third.tablet}`} />
+                            <source media="(max-width: 375px)" srcset={`.${product.gallery.third.mobile}`} />
+                            <Image rounded fluid src={`.${product.gallery.third.mobile}`} width="100%" />
                         </picture>
                     </Col>
                 </Row>
@@ -191,7 +198,7 @@ function ProductDetail(props) {
                 </Row>
                 <Row>
                     {
-                        productData[0].others.map((suggestedItem, index)=> {
+                        product.others.map((suggestedItem, index)=> {
                             return (
                                 <ProductSuggestionCard
                                     key={index} 
@@ -268,51 +275,9 @@ function ProductDetail(props) {
                     </Col>
                 </Row>
             </Container>
-            <Container fluid>
-                <Row style={{ backgroundColor: "#101010" }} className="mt-5 d-flex justify-content-between p-5" lg={6} sm={12}>
-                    <Col style={{ color: "#fff" }}>
-                        <h3>audiophile</h3>
-
-                        {/* <p>
-                            Audiophile is an all in one stop to fulfill your audio needs. 
-                            We're a small team of music lovers and sound specialists who are 
-                            devoted to helping you get the most out of personal audio. Come and 
-                            visit our demo facility - we're open 7 days a week.
-                        </p>
-
-                        <p>Copyright 2021. All Rights Reserved</p> */}
-                        
-                    </Col>
-                    <Col style={{ color: "#fff" }} lg={6} sm={12}>
-                        <ul className="footer-menu">
-                            <li>HOME</li>
-                            <li>HEADPHONES</li>
-                            <li>SPEAKERS</li>
-                            <li>EARPHONES</li>
-                        </ul>
-                    </Col>
-                </Row>
-                <Row className="pl-5" style={{ backgroundColor: "#101010", color: "#fff" }}>
-                    <Col lg={6} sm={12}>
-                         <p>
-                            Audiophile is an all in one stop to fulfill your audio needs. 
-                            We're a small team of music lovers and sound specialists who are 
-                            devoted to helping you get the most out of personal audio. Come and 
-                            visit our demo facility - we're open 7 days a week.
-                        </p>
-                    </Col>
-                    <Col className="d-flex align-items-start justify-content-end">
-                        <Image className="social-icons" src="../assets/shared/desktop/icon-facebook.svg" />
-                        <Image className="social-icons" src="../assets/shared/desktop/icon-twitter.svg" />
-                        <Image className="social-icons" src="../assets/shared/desktop/icon-instagram.svg" />
-                    </Col>
-                </Row>
-                <Row className="pl-5" style={{ backgroundColor: "#101010", color: "#fff" }}>
-                    <Col>
-                        <p>Copyright 2021. All Rights Reserved</p>
-                    </Col>
-                </Row>
-            </Container>
+            <Footer />
+            </>
+            }
         </>
     )
 }

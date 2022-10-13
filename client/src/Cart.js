@@ -11,7 +11,7 @@ import { Link, useParams } from "react-router-dom";
 import CartItem from "./CartItem";
 
 function Cart(props) {
-   console.log(props)
+//    console.log(props)
 
   let [ cartArray, setCartArray ] = useState([]);
   let [ itemInput, setItemInput ] = useState(0);
@@ -24,22 +24,26 @@ function Cart(props) {
       setCartArray(
           JSON.parse(localStorage.getItem("cart"))
       )
-        console.log('testing cart array', cartArray, typeof cartArray)
+        // console.log('testing cart array', cartArray, typeof cartArray)
   }, [ increaseItem, decreaseItem ])
 
   function removeAll() {
+    // console.log('haha')
       setCartArray(
           JSON.parse(localStorage.getItem("cart"))
       )
 
+    //   setCartArray(
+    //       cartArray = []
+    //   )
       setCartArray(
-          cartArray = []
+        cartArray = localStorage.clear()
       )
-      localStorage.clear()
+    //   console.log('remove all cart array', cartArray)
   }
 
   props.passCartProp(cartArray);
-console.log(cartArray)
+// console.log(cartArray)
   function increaseCartItem(x, y) {
         setCartItemCount(x)
         setIncreaseItem(
@@ -71,17 +75,27 @@ console.log(cartArray)
             decreaseItem.price = y.cartItemPrice,
             decreaseItem.slug = y.slug
         )
-        const subItems = JSON.parse(localStorage.getItem("cart"))
-
-        for (let i = 0; i < subItems.length; i++) {
-            if (subItems[i].name === decreaseItem.name) {
-            subItems.splice(i, 1, decreaseItem)
-            }
-        }
-
+        // console.log('cart item count', cartItemCount)
+        // const subItems = JSON.parse(localStorage.getItem("cart"))
         setCartArray(
-            localStorage.setItem("cart", JSON.stringify(subItems))
+            JSON.parse(localStorage.getItem("cart"))
         )
+        // console.log('initial set cart array', cartArray)
+
+        for (let i = 0; i < cartArray.length; i++) {
+            if (cartArray[i].name === decreaseItem.name) {
+            cartArray.splice(i, 1, decreaseItem)
+            setCartArray(
+                JSON.parse(localStorage.getItem("cart"))
+            )
+            // console.log('getting cart array', cartArray)
+            cartArray = cartArray.filter(item => item.quantity !== 0)
+            setCartArray(
+                localStorage.setItem("cart", JSON.stringify(cartArray))
+            )
+            }
+            // console.log('loop cartArray', cartArray)
+        }
     }
   
 
@@ -97,8 +111,12 @@ console.log(cartArray)
             <Row>
                 <Col xs={12}>
                     {
-                        cartArray && cartArray.map(item => {
-                            return <CartItem increaseCartItem={increaseCartItem} decreaseCartItem={decreaseCartItem} cartItemInfo={item.name} cartItemQuantity={item.quantity} cartItemPrice={item.price} slug={item.slug} />
+                        cartArray && cartArray.map((item, index) => {
+                            if (item.quantity === 0) {
+                                cartArray.filter(item => item.quantity > 0)
+                            } else {
+                                return <CartItem increaseCartItem={increaseCartItem} decreaseCartItem={decreaseCartItem} cartItemInfo={item.name} cartItemQuantity={item.quantity} cartItemPrice={item.price} slug={item.slug} />
+                            }
                         })
                     }
                 </Col>

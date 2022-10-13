@@ -27,6 +27,7 @@ function App() {
 
   function passDataToApp(x) {
     setCartArray(x)
+    // console.log('app cart array', cartArray)
   }
  
   return (

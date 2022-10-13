@@ -9,7 +9,7 @@ import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
 
 function SummaryItem(props) {
-    console.log('summary item props', props)
+    // console.log('summary item props', props)
     return (
         <Row>
             <Col xs={3} style={{ backgroundColor: "red" }}>

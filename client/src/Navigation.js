@@ -17,33 +17,39 @@ function Navigation(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    console.log('nav props', props)
+    // console.log('nav props', props)
 
     useEffect(() => {
         const items = JSON.parse(localStorage.getItem("cart"))
             if (items) {
                 setCartArray(items)
             }
-    }, [])
+            if (cartArray.length === 1 && cartArray[0].quantity === 0) {
+                // setCartArray(cartArray = [])
+                setGetCart(getCart = [])
+            }
+            // console.log('testing', cartArray)
+    }, [ props ])
 
     function handleClick() {
         setShow(true);
     }
 
     function passCart(x) {
+        // console.log('x', x)
         setGetCart(x)
     }
-    console.log(getCart)
+    // console.log(getCart)
 
     props.passDataToAppProp(getCart);
-    console.log('nav cart array', cartArray)
+    console.log('nav cart array:', cartArray, 'getCart:', getCart)
     return(
         <>
             <Container fluid>
                 <Row className="justify-content-space-between">
                     <Navbar bg="dark" variant="dark">
                         <Container>
-                            <Navbar.Brand href="#home">
+                            <Navbar.Brand href="/">
                                 <h3>Audiophile</h3>
                             </Navbar.Brand>
                         </Container>
@@ -75,7 +81,7 @@ function Navigation(props) {
                     <Cart passCartProp={passCart} />
                 </Modal.Body>
                 {
-                    !getCart ?
+                    (!getCart || getCart == [] || cartArray.length === 0) ?
                     null
                     :
                     <Modal.Footer>

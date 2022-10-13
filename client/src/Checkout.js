@@ -11,6 +11,7 @@ import Modal from 'react-bootstrap/Modal';
 import Cart from "./Cart";
 import Form from 'react-bootstrap/Form';
 import SummaryItem from "./SummaryItem";
+import Footer from "./Footer";
 
 function Checkout(props) {
     console.log('checkout props', props);
@@ -20,7 +21,7 @@ function Checkout(props) {
     let [ vat, setVat ] = useState(null);
     let [ grandTotal, setGrandTotal ] = useState(null);
     let [ shipping, setShipping ] = useState(0);
-    console.log('checkout cart', cart)
+    // console.log('checkout cart', cart)
     
     useEffect(() => {
         let items = JSON.parse(localStorage.getItem("cart"))
@@ -51,7 +52,21 @@ function Checkout(props) {
             0
         )
     }, [ totalAmount, vat, grandTotal, shipping, props.cart ])
-   console.log('checkout cart', cart)
+//    console.log('checkout cart', cart)
+
+   
+
+    function handleClick() {
+        console.log("hi")
+    }
+
+    function handleName(e) {
+        // console.log(e.target.value)
+    }
+
+    // console.log('cart', cart)
+    // console.log('props.cart', props.cart)
+
     return(
         <>
             {/* <Navigation /> */}
@@ -61,7 +76,7 @@ function Checkout(props) {
                         Go Back
                     </Link>
                 </Row>
-                <Container className="p-5" style={{ backgroundColor: "purple" }}>
+                <Container className="p-5">
                     <Row>
                         <h1>CHECKOUT</h1>
                     </Row>
@@ -70,14 +85,14 @@ function Checkout(props) {
                     </Row> */}
                     {/* Billing Details */}
                     <Row className="mt-5 gx-5">
-                        <Col style={{ backgroundColor: "blue"}} lg={8}>
+                        <Col lg={8}>
                             <h6>BILLING DETAILS</h6>
                             <Form>
                                 <Row>
                                     <Col lg={6}>
                                         <Form.Group>
                                             <Form.Label>Name</Form.Label>
-                                            <Form.Control type="text" placeholder="Alexei Ward" />
+                                            <Form.Control isValid="false" onChange={handleName} type="text" placeholder="Alexei Ward" />
                                         </Form.Group>
                                     </Col>
                                     <Col lg={6}>
@@ -160,7 +175,7 @@ function Checkout(props) {
                                 </Row>
                             </Form>
                         </Col>
-                        <Col style={{ backgroundColor: "green"}} lg={4}>
+                        <Col lg={4}>
                             <Row>
                                 <Col>
                                     <h4>Summary</h4>
@@ -170,88 +185,47 @@ function Checkout(props) {
                             <SummaryItem /> */}
                             {
                                 props.cart && props.cart.map(item => {
-                                    return <SummaryItem src={`assets/cart/image-${item.slug}.jpg`} title={item.name} price={item.price} quantity={item.quantity} />
+                                    if (item.quantity === 0) {
+                                        cart.filter(item => item.quantity > 0)
+                                    } else {
+                                        return <SummaryItem src={`assets/cart/image-${item.slug}.jpg`} title={item.name} price={item.price} quantity={item.quantity} />
+                                    }
                                 })
                             }
                             <Row>
                                 <Col className="d-flex justify-content-between">
                                     <p>TOTAL</p>
-                                    <p>${totalAmount}</p>
+                                    <p>${!Array.isArray(props.cart) || !props.cart.length ? 0 : totalAmount}</p>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col className="d-flex justify-content-between">
                                     <p>SHIPPING</p>
-                                    <p>${shipping}</p>
+                                    <p>${!Array.isArray(props.cart) || !props.cart.length ? 0 : shipping}</p>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col className="d-flex justify-content-between">
                                     <p>VAT (INCLUDED)</p>
-                                    <p>${vat}</p>
+                                    <p>${!Array.isArray(props.cart) || !props.cart.length ? 0 : vat}</p>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col className="d-flex justify-content-between">
                                     <p>GRAND TOTAL</p>
-                                    <p>${grandTotal}</p>
+                                    <p>${!Array.isArray(props.cart) || !props.cart.length ? 0 : grandTotal}</p>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col className="d-flex justify-content-center">
-                                    <Button>CONTINUE & PAY</Button>
+                                    <Button onClick={handleClick} disabled={props.cart && props.cart.length === 0 && true}>CONTINUE & PAY</Button>
                                 </Col>
                             </Row>
                         </Col>
                     </Row>
                 </Container>
             </Container>
-
-            <Container fluid>
-                <Row style={{ backgroundColor: "#101010" }} className="mt-5 d-flex justify-content-between p-5" lg={6} sm={12}>
-                    <Col style={{ color: "#fff" }}>
-                        <h3>audiophile</h3>
-
-                        {/* <p>
-                            Audiophile is an all in one stop to fulfill your audio needs. 
-                            We're a small team of music lovers and sound specialists who are 
-                            devoted to helping you get the most out of personal audio. Come and 
-                            visit our demo facility - we're open 7 days a week.
-                        </p>
-
-                        <p>Copyright 2021. All Rights Reserved</p> */}
-                        
-                    </Col>
-                    <Col style={{ color: "#fff" }} lg={6} sm={12}>
-                        <ul className="footer-menu">
-                            <li>HOME</li>
-                            <li>HEADPHONES</li>
-                            <li>SPEAKERS</li>
-                            <li>EARPHONES</li>
-                        </ul>
-                    </Col>
-                </Row>
-                <Row className="pl-5" style={{ backgroundColor: "#101010", color: "#fff" }}>
-                    <Col lg={6} sm={12}>
-                         <p>
-                            Audiophile is an all in one stop to fulfill your audio needs. 
-                            We're a small team of music lovers and sound specialists who are 
-                            devoted to helping you get the most out of personal audio. Come and 
-                            visit our demo facility - we're open 7 days a week.
-                        </p>
-                    </Col>
-                    <Col className="d-flex align-items-start justify-content-end">
-                        <Image className="social-icons" src="../assets/shared/desktop/icon-facebook.svg" />
-                        <Image className="social-icons" src="../assets/shared/desktop/icon-twitter.svg" />
-                        <Image className="social-icons" src="../assets/shared/desktop/icon-instagram.svg" />
-                    </Col>
-                </Row>
-                <Row className="pl-5" style={{ backgroundColor: "#101010", color: "#fff" }}>
-                    <Col>
-                        <p>Copyright 2021. All Rights Reserved</p>
-                    </Col>
-                </Row>
-            </Container>
+            <Footer />
         </>
         )
 }
